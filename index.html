@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎉 Countdown Timer 🎉</title>
+    <title>Countdown Timer</title>
     <style>
         body {
             display: flex;
@@ -21,9 +21,7 @@
             font-size: 3rem;
             margin-bottom: 20px;
             animation: fadeIn 1s ease;
-        }
-        .celebration {
-            font-size: 5rem;
+            z-index: 1;
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -31,6 +29,7 @@
         }
         .firework {
             position: absolute;
+            bottom: 0;
             width: 10px;
             height: 10px;
             background-color: #ff0;
@@ -41,7 +40,10 @@
         @keyframes explode {
             0% {
                 transform: translateY(0) scale(1);
-                opacity: 0.8;
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
             }
             100% {
                 transform: translateY(-200px) scale(3);
@@ -52,9 +54,6 @@
 </head>
 <body>
     <div id="timer">Loading...</div>
-    <div class="celebration">
-        🎆🎉💣💥
-    </div>
 
     <script>
         // Set the date and time for the countdown
@@ -65,12 +64,11 @@
         countdownDate.setDate(countdownDate.getDate() + daysUntilThursday);
         countdownDate.setHours(22, 0, 0, 0); // 10 PM
 
-        // Function to create fireworks
+        // Function to create firework crackers
         function createFirework() {
             const firework = document.createElement('div');
             firework.className = 'firework';
             firework.style.left = Math.random() * 100 + 'vw';
-            firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
             document.body.appendChild(firework);
 
             // Remove firework after animation
@@ -96,11 +94,10 @@
             // If the countdown is over, display a celebration message
             if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("timer").innerHTML = "🎉 Countdown Finished! 🎉💣💥";
-                document.querySelector(".celebration").innerHTML += " 🎊🎇";
+                document.getElementById("timer").innerHTML = "Countdown Finished!";
 
-                // Start creating fireworks
-                setInterval(createFirework, 200);
+                // Start creating fireworks every 2 seconds
+                setInterval(createFirework, 2000);
             }
         }, 1000);
     </script>
