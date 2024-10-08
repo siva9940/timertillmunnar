@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        #timer {
+            font-size: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="timer"></div>
+
+    <script>
+        // Set the date and time for the countdown
+        const countdownDate = new Date();
+        const dayOfWeek = 4; // Thursday (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+        const now = countdownDate.getDay();
+        const daysUntilThursday = (dayOfWeek - now + 7) % 7;
+        countdownDate.setDate(countdownDate.getDate() + daysUntilThursday);
+        countdownDate.setHours(22, 0, 0, 0); // 10 PM
+
+        // Update the countdown every second
+        const x = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            // Time calculations for days, hours, minutes, and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the timer div
+            document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            // If the countdown is over, display a message
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "Countdown Finished!";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
