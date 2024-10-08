@@ -20,12 +20,7 @@
         #timer {
             font-size: 3rem;
             margin-bottom: 20px;
-            animation: fadeIn 1s ease;
             z-index: 1;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
         .firework {
             position: absolute;
@@ -42,9 +37,6 @@
                 transform: translateY(0) scale(1);
                 opacity: 1;
             }
-            50% {
-                opacity: 1;
-            }
             100% {
                 transform: translateY(-200px) scale(3);
                 opacity: 0;
@@ -58,7 +50,7 @@
     <script>
         // Set the date and time for the countdown
         const countdownDate = new Date();
-        const dayOfWeek = 4; // Thursday (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+        const dayOfWeek = 4; // Thursday
         const now = countdownDate.getDay();
         const daysUntilThursday = (dayOfWeek - now + 7) % 7;
         countdownDate.setDate(countdownDate.getDate() + daysUntilThursday);
@@ -78,7 +70,7 @@
         }
 
         // Update the countdown every second
-        const x = setInterval(() => {
+        const intervalId = setInterval(() => {
             const now = new Date().getTime();
             const distance = countdownDate - now;
 
@@ -93,9 +85,9 @@
 
             // If the countdown is over, display a celebration message
             if (distance < 0) {
-                clearInterval(x);
+                clearInterval(intervalId);
                 document.getElementById("timer").innerHTML = "Countdown Finished!";
-
+                
                 // Start creating fireworks every 2 seconds
                 setInterval(createFirework, 2000);
             }
